@@ -4,6 +4,7 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
 export default function Search({ placeholder }: { placeholder: string }) {
+  
   const searchParams = useSearchParams(); //added userSearchParams hook
   const pathname = usePathname(); //added usePathname hook
   const { replace } = useRouter(); //added useRouter hook to use replace function
@@ -18,8 +19,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
       param.delete('query'); //if 'search' doesn't work, change it to 'query'
     }
     replace('${pathname}?${param.toString()}'); //replace the current url with the new one
-    console.log(term);
-  }, 300); //the search will be debounced by 300ms, meaning that the search will only be triggered after 300ms of inactivity
+  }, 300);
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
@@ -29,9 +29,9 @@ export default function Search({ placeholder }: { placeholder: string }) {
         className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
         placeholder={placeholder}
         onChange={(e) => {
-          handleSearch(e.target.value);
+          handleSearch(e.target.value); //added handleSearch function to handle the search
         }}
-        defaultValue={searchParams.get('search')?.toString()} //added defaultValue to ensure input value is always in sync with the URL
+        defaultValue={searchParams.get('query')?.toString()} //added defaultValue to ensure input value is always in sync with the URL
       />
       <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
     </div>
