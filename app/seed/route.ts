@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import { fromJSON } from 'postcss';
 
 const client = await db.connect();
 
@@ -54,6 +55,14 @@ async function seedInvoices() {
 
   return insertedInvoices;
 }
+
+async function listInvoices() {
+  return client.sql`
+  onselect invoices.amount, customers.name
+  FROM invoices
+  JOIN customers ON invoices.customer_id = customers.id
+  WHERE invoices.amount = 666;`
+} //this function is added to list the invoices, its function is to list the invoices
 
 async function seedCustomers() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
