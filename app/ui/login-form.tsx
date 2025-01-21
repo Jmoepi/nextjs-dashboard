@@ -1,5 +1,7 @@
-'use Client';
-
+"use client";
+//'use Client';
+//Error:   x You're importing a component that needs `useActionState`. This React hook only works in a client component. To fix, mark the file (or its parent) with the `"use client"` directive.
+import React from 'react';
 import { lusitana } from '@/app/ui/fonts';
 import {
   AtSymbolIcon,
