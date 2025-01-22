@@ -1,28 +1,38 @@
 import Form from '@/app/ui/invoices/edit-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
+import Search from '@/app/ui/search';
+import { CreateInvoice } from '@/app/ui/invoices/buttons';
+import { lusitana } from '@/app/ui/fonts';
+import { Suspense } from 'react';
+import Table from '@/app/ui/invoices/table';
+import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import Pagination from '@/app/ui/invoices/pagination';
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
-    const params = await props.params; //this will get the params from the URL
-    const id = params.id; //this will get the id from the URL
-    const [invoice, customers] = await Promise.all([
-        fetchInvoiceById(id),
-        fetchCustomers(),
-      ]); //this will fetch the invoice and customers data
-    
+export default async function Page(props: {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
     return (
-        <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
-          {
-            label: 'Edit Invoice',
-            href: `/dashboard/invoices/${id}/edit`,
-            active: true,
-          },
-        ]}
-      />
-      <Form invoice={invoice} customers={customers} />
-    </main>
+      <div className="w-full">
+      <div className="flex w-full items-center justify-between">
+        <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+        <Search placeholder="Search invoices..." />
+        <CreateInvoice />
+      </div>
+      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+        <Table query={query} currentPage={currentPage} />
+      </Suspense>
+      <div className="mt-5 flex w-full justify-center">
+         {/* <Pagination totalPages={totalPages} /> */}
+      </div>
+    </div>
     );
 }
