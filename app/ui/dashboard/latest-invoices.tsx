@@ -1,4 +1,3 @@
-// filepath: /c:/Users/User/Desktop/next.js project/nextjs-dashboard/app/ui/dashboard/latest-invoices.tsx
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -18,6 +17,9 @@ interface LatestInvoicesProps {
 }
 
 const LatestInvoices: React.FC<LatestInvoicesProps> = ({ latestInvoices }) => {
+  // Remove duplicates based on the invoice id
+  const uniqueInvoices = Array.from(new Map(latestInvoices.map(invoice => [invoice.id, invoice])).values());
+
   return (
     <div className="flex w-full flex-col md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
@@ -25,7 +27,7 @@ const LatestInvoices: React.FC<LatestInvoicesProps> = ({ latestInvoices }) => {
       </h2>
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         <div className="bg-white px-6">
-          {latestInvoices.map((invoice, i) => (
+          {uniqueInvoices.map((invoice, i) => (
             <div
               key={invoice.id}
               className={clsx(
