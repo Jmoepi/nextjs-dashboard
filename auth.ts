@@ -7,7 +7,7 @@ import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt'
 import { revalidatePath } from 'next/cache';    //this will revalidate the path
 import { redirect } from 'next/navigation';    //this will redirect the user
-//import {signIn} from '@/auth';    //this will sign the user in
+
 
 async function getUser(email: string): Promise<User | undefined> {
     try {
