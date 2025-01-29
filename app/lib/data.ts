@@ -9,6 +9,37 @@ import {
 } from './definitions';
 import { formatCurrency } from './utils';
 
+//new temporay function
+// Add this function to your existing data.ts file
+// export async function fetchFilteredCustomers(query: string, currentPage: number) {
+//   try {
+//     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+//     const customers = await sql<CustomersTableType>`
+//       SELECT
+//         customers.id,
+//         customers.name,
+//         customers.email,
+//         customers.image_url,
+//         SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) as total_pending,
+//         SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) as total_paid
+//       FROM customers
+//       LEFT JOIN invoices ON customers.id = invoices.customer_id
+//       WHERE
+//         customers.name ILIKE ${`%${query}%`} OR
+//         customers.email ILIKE ${`%${query}%`}
+//       GROUP BY customers.id, customers.name, customers.email, customers.image_url
+//       ORDER BY customers.name ASC
+//       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+//     `;
+
+//     return customers;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch customer table.');
+//   }
+// }
+//ene of new temporay function
 export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
@@ -183,7 +214,7 @@ export async function fetchCustomers() {
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
+export async function fetchFilteredCustomers(query: string, currentPage: number) {
   try {
     const data = await sql<CustomersTableType>`
 		SELECT

@@ -2,7 +2,47 @@ import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import Search from '@/app/ui/search';
 import { FormattedCustomersTable } from '@/app/lib/definitions';
+//temporary import
+// import { Customer, CustomersTableType } from '@/app/lib/definitions';
+// import { sql } from '@vercel/postgres';
 
+// export async function fetchFilteredCustomers(query: string, currentPage: number): Promise<Customer[]> {
+//   try {
+//     //const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+//     const data = await sql<CustomersTableType>`
+//       SELECT
+//         customers.id,
+//         customers.name,
+//         customers.email,
+//         customers.image_url,
+//         SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) as total_pending,
+//         SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) as total_paid
+//       FROM customers
+//       LEFT JOIN invoices ON customers.id = invoices.customer_id
+//       WHERE
+//         customers.name ILIKE ${`%${query}%`} OR
+//         customers.email ILIKE ${`%${query}%`}
+//       GROUP BY customers.id, customers.name, customers.email, customers.image_url
+//       ORDER BY customers.name ASC
+      
+//     `;
+//     //LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+//     // Convert QueryResult to Customer[]
+//     return data.rows.map(customer => ({
+//       id: customer.id,
+//       name: customer.name,
+//       email: customer.email,
+//       image_url: customer.image_url,
+//       total_pending: Number(customer.total_pending) || 0,
+//       total_paid: Number(customer.total_paid) || 0
+//     }));
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch customer table.');
+//   }
+// }
+//end of temporary import
 export default async function CustomersTable({
   customers,
 }: {
