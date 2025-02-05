@@ -74,7 +74,7 @@ export async function Page({
         <Search placeholder="Search customers..." />
       </div>
       <Suspense key={query + currentPage} fallback={<CustomersTableSkeleton />}>
-        {/* <CustomersTable customers={customers} /> */}
+       
       </Suspense>
     </div>
   );
